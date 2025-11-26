@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <AssemblyName>cfs</AssemblyName>
+    <Authors>Jan Oliver Rüdiger</Authors>
+    <Company>Leibniz-Institut für Deutsche Sprache</Company>
+    <Title>CooccurrenceFieldSampler</Title>
+    <Copyright>2025 by Jan Oliver Rüdiger</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CorpusExplorerV3\CorpusExplorer.v3.Sdk\CorpusExplorer.v3.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>
