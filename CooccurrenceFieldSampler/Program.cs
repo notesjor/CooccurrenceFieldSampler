@@ -166,14 +166,8 @@ namespace CooccurrenceFieldSampler
         Console.WriteLine($"use: {string.Join(", ", _exporter.Keys)}");
         return;
       }
-      var exporter = _importer[opts.ToFormat.ToLower()];
+      var exporter = _exporter[opts.ToFormat.ToLower()];
       var output = opts.ToPath;
-
-      //var minFrequ = int.Parse(args[0]);
-      //var minSign = double.Parse(args[1]);
-      //var layer = args[2]; // Layer (alle Korpora müssen diesen Layer beinahlten)
-      //var minChange = double.Parse(args[3]); // Minimale Anpassung (wenn unterschritten > Abbruch)
-      //var max = int.Parse(args[4]); // Maximale Anzahl an Runden (wenn überschritten > Abbruch)
 
       var log = $"{output}.log";
       if (File.Exists(log))
@@ -187,7 +181,7 @@ namespace CooccurrenceFieldSampler
       PrintInfo(files, opts.LayerName, opts.MinChangeRate, opts.MaxRounds, log);
 
       // Preparation
-      var selections = PrepareCorpusIndex(files, opts.LayerName);
+      var selections = PrepareCorpusIndex(files, importer, opts.LayerName);
 
       var corporaCount = selections.Count();
       var sizes = selections.Select(x => x.Sum(y => (long)y.Value)).ToArray();
@@ -225,14 +219,14 @@ namespace CooccurrenceFieldSampler
         Console.WriteLine($"CR: {change}");
         if (change < opts.MinChangeRate || ratiosNew.Any(x => x == 0) || ratiosNew.All(x => (int)x == 1))
         {
-          Save(guids);
+          Save(exporter, guids, opts.ToPath);
           return; // Beende Programm
         }
 
         ratios = ratiosNew;
       }
 
-      Save(guids);
+      Save(exporter, guids, opts.ToPath);
     }
 
     private static void PrintBaseField(Dictionary<int, int[]>[] baseField)
@@ -304,22 +298,29 @@ namespace CooccurrenceFieldSampler
       return res;
     }
 
-    private static List<Dictionary<Guid, int>> PrepareCorpusIndex(List<string> files, string layer)
+    private static List<Dictionary<Guid, int>> PrepareCorpusIndex(List<string> files, AbstractImporter importer, string layer)
     {
       var res = new List<Dictionary<Guid, int>>();
 
       var merger = new CorpusMerger();
       foreach (var file in files)
       {
-        var corpus = CorpusAdapterWriteDirect.Create(file);
-        foreach (var l in corpus.LayerUniqueDisplaynames.Where(x => x != layer))
-          corpus.LayerDelete(l);
-
-        corpus = ConvertSentenceToDocuments(corpus, layer, out var sizeInfo);
-        res.Add(sizeInfo);
-        merger.Input(corpus);
-
-        corpus.Dispose();
+        try
+        {
+          var corpora = importer.Execute(new[] { file });
+          foreach (var corpus in corpora)
+          {
+            foreach (var l in corpus.LayerUniqueDisplaynames.Where(x => x != layer))
+              corpus.LayerDelete(l);
+            var tmp = ConvertSentenceToDocuments((CorpusAdapterWriteDirect)corpus, layer, out var sizeInfo);
+            res.Add(sizeInfo);
+            merger.Input(tmp);
+          }
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine($"error importing file {file}: {ex.Message}");
+        }
       }
 
       merger.Execute();
@@ -378,15 +379,17 @@ namespace CooccurrenceFieldSampler
       return corpus;
     }
 
-    private static void Save(List<Guid> selection)
+    private static void Save(AbstractExporter exporter, List<Guid> selection, string outputPath)
     {
-      if (selection != null)
-        _all.CreateTemporary(selection).ToCorpus().Save("output.cec6", false);
+      if (selection == null)
+        return;
+
+      exporter.Export(_all.CreateTemporary(selection).ToCorpus(), outputPath);
     }
 
     private static void PrintInfo(List<string> files, string layer, double min, int max, string log)
     {
-      Console.WriteLine("ContextEquivalenceSampler - (c) 2024 by Jan Oliver Rüdiger");
+      Console.WriteLine("ContextEquivalenceSampler - (c) 2025 by Jan Oliver Rüdiger");
       Console.WriteLine($"{files.Count} files - Layer: {layer}");
       Console.WriteLine($"min. change: {min} - max. rounds: {max}");
       Console.WriteLine($"output: {log}");

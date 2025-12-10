@@ -5,13 +5,14 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PublishAot>true</PublishAot>
+    <PublishAot>False</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
     <AssemblyName>cfs</AssemblyName>
     <Authors>Jan Oliver Rüdiger</Authors>
     <Company>Leibniz-Institut für Deutsche Sprache</Company>
     <Title>CooccurrenceFieldSampler</Title>
     <Copyright>2025 by Jan Oliver Rüdiger</Copyright>
+    <StartupObject>CooccurrenceFieldSampler.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
