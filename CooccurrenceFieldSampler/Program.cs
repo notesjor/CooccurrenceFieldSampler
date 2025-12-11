@@ -101,13 +101,13 @@ namespace CooccurrenceFieldSampler
 
     public class Options
     {
-      [Option("from", Default = "cec6", Required = false, HelpText = "import file format (valid: cec, bnc, catma, clan, conll, cora, cwd, dewac, dta, folia, fln, korap, leipzig, xces, relannis, salt, json, sketch, speedy, tiger, tlv, treetagger, tsv, txm, weblicht)")]
+      [Option("from", Default = "cec", Required = false, HelpText = "import file format (valid: cec, bnc, catma, clan, conll, cora, cwd, dewac, dta, folia, fln, korap, leipzig, xces, relannis, salt, json, sketch, speedy, tiger, tlv, treetagger, tsv, txm, weblicht)")]
       public string FromFormat { get; set; }
 
       [Option("input", Default = "input/", Required = false, HelpText = "folder with input-files (mix per file)")]
       public string FromPath { get; set; }
 
-      [Option("to", Default = "cec6", Required = false, HelpText = "export file format (valid: cec, catma, conll, cwd, csv, dta, folia, i5, korap, xces, plain, salt, json, sketch, speedy, tlv, tsv, treetagger, txm, weblicht)")]
+      [Option("to", Default = "cec", Required = false, HelpText = "export file format (valid: cec, catma, conll, cwd, csv, dta, folia, i5, korap, xces, plain, salt, json, sketch, speedy, tlv, tsv, treetagger, txm, weblicht)")]
       public string ToFormat { get; set; }
 
       [Option("layer", Default = "Wort", Required = false, HelpText = "use this layer to calculate the co-occurrences")]
@@ -122,7 +122,7 @@ namespace CooccurrenceFieldSampler
       [Option("minSignificance", Default = 1.0, Required = false, HelpText = "min. significance (poisson distribution)")]
       public double MinSignificance { get; set; }
 
-      [Option("minChangeRate", Default = 0.0, Required = false, HelpText = "min. significance (poisson distribution)")]
+      [Option("minChangeRate", Default = 0.1, Required = false, HelpText = "min. significance (poisson distribution)")]
       public double MinChangeRate { get; set; }
 
       [Option("maxRounds", Default = 10, Required = false, HelpText = "min. absolute frequency")]

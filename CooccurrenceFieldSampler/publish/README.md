@@ -2,25 +2,37 @@
 
 2025 by Jan Oliver Rüdiger
 
-  --from               (Default: cec6) import file format (valid: cec, bnc, catma, clan, conll, cora, cwd, dewac, dta, folia, fln, korap, leipzig, xces,
+To use the CFS tool, follow these steps:
+
+1. Unzip the ZIP file containing the necessary files.
+2. For Windows, Linux, and macOS, you will find precompiled binaries that run exclusively on x64 processors.
+3. If you are using a different processor type, such as ARM or ARM64, please use the Universal folder.
+4. Windows users should run "cfs.exe" directly.
+5. For Linux and macOS users, you must mark the cfs file as executable.
+6. If using the Universal version, ensure .NET 10.0 is installed for compiling. You can then run the program with "dotnet cfs.dll".
+7. To display help information, use the --help parameter.
+
+Help/Parameter:
+
+  --from               (Default: cec / recommended: cec) import file format (valid: cec, bnc, catma, clan, conll, cora, cwd, dewac, dta, folia, fln, korap, leipzig, xces,
                        relannis, salt, json, sketch, speedy, tiger, tlv, treetagger, tsv, txm, weblicht)
 
   --input              (Default: input/) folder with input-files (mix per file)
 
-  --to                 (Default: cec6) export file format (valid: cec, catma, conll, cwd, csv, dta, folia, i5, korap, xces, plain, salt, json, sketch,
+  --to                 (Default: cec / recommended: cec) export file format (valid: cec, catma, conll, cwd, csv, dta, folia, i5, korap, xces, plain, salt, json, sketch,
                        speedy, tlv, tsv, treetagger, txm, weblicht)
 
   --layer              (Default: Wort) use this layer to calculate the co-occurrences
 
   --output             (Default: output.cec6) output file (every round and logfile)
 
-  --minFrequency       (Default: 1) min. absolute frequency
+  --minFrequency       (Default: 1 / recommended: 5) min. absolute frequency
 
-  --minSignificance    (Default: 1.0) min. significance (poisson distribution)
+  --minSignificance    (Default: 1.0 / recommended: 1.0) min. significance (poisson distribution)
 
-  --minChangeRate      (Default: 0) min. significance (poisson distribution)
+  --minChangeRate      (Default: 0.1 / recommended: 0.1) min. significance (poisson distribution)
 
-  --maxRounds          (Default: 10) min. absolute frequency
+  --maxRounds          (Default: 10 / recommended: 5) min. absolute frequency
 
   --help               Display this help screen.
 
