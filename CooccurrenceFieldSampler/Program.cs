@@ -101,19 +101,19 @@ namespace CooccurrenceFieldSampler
 
     public class Options
     {
-      [Option("from", Default = "cec6", Required = false, HelpText = "import file format (valid: )")]
+      [Option("from", Default = "cec6", Required = false, HelpText = "import file format (valid: cec, bnc, catma, clan, conll, cora, cwd, dewac, dta, folia, fln, korap, leipzig, xces, relannis, salt, json, sketch, speedy, tiger, tlv, treetagger, tsv, txm, weblicht)")]
       public string FromFormat { get; set; }
 
       [Option("input", Default = "input/", Required = false, HelpText = "folder with input-files (mix per file)")]
       public string FromPath { get; set; }
 
-      [Option("to", Default = "cec6", Required = false, HelpText = "export file format (valid: )")]
+      [Option("to", Default = "cec6", Required = false, HelpText = "export file format (valid: cec, catma, conll, cwd, csv, dta, folia, i5, korap, xces, plain, salt, json, sketch, speedy, tlv, tsv, treetagger, txm, weblicht)")]
       public string ToFormat { get; set; }
 
       [Option("layer", Default = "Wort", Required = false, HelpText = "use this layer to calculate the co-occurrences")]
       public string LayerName { get; set; }
 
-      [Option("output", Default = "output/", Required = false, HelpText = "output path (every round and logfile)")]
+      [Option("output", Default = "output.cec6", Required = false, HelpText = "output file (every round and logfile)")]
       public string ToPath { get; set; }
 
       [Option("minFrequency", Default = 1, Required = false, HelpText = "min. absolute frequency")]
